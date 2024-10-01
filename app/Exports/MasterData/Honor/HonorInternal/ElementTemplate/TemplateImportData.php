@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exports\MasterData\Honor\HonorAsesmen\ElementTemplate;
+namespace App\Exports\MasterData\Honor\HonorInternal\ElementTemplate;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -14,7 +14,7 @@ class TemplateImportData implements FromCollection, WithHeadings, ShouldAutoSize
 {
     public function title(): string
     {
-        return 'Template Import Honor Asesmen';
+        return 'Template Import Honor Internal';
     }
 
     /**
@@ -23,11 +23,12 @@ class TemplateImportData implements FromCollection, WithHeadings, ShouldAutoSize
     public function collection()
     {
         $example = [
-            'Contoh ID Honor Asesmen',
-            'Contoh Kode Honor Asesmen',
-            'Contoh Jenis Honor Asesmen',
-            'Contoh Satuan Honor Asesmen',
-            'Contoh Keterangan Honor Asesmen',
+            'Contoh ID Honor Internal',
+            'Contoh Kode Honor Internal',
+            'Contoh Jenis Honor Internal',
+            'Contoh Honor Honor Internal',
+            'Contoh Satuan Honor Internal',
+            'Contoh Keterangan Honor Internal',
         ];
 
         return collect([$example]);
@@ -47,7 +48,7 @@ class TemplateImportData implements FromCollection, WithHeadings, ShouldAutoSize
 
     public function styles(Worksheet $sheet)
     {
-        foreach (range("a", "e") as $value) {
+        foreach (range("a", "f") as $value) {
             $cell = strtoupper($value)."1";
             $sheet->getStyle($cell)->getFont()->setBold(true);
         }

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Exports\MasterData\Honor\HonorAsesmen\ElementTemplate;
+namespace App\Exports\MasterData\Honor\HonorInternal\ElementTemplate;
 
-use App\Models\MasterData\Honor\RefHonorAsesmen;
+use App\Models\MasterData\Honor\RefHonorInternal;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class DataHonorAsesmen implements FromCollection, WithTitle, WithStyles, WithHeadings, ShouldAutoSize
+class DataHonorInternal implements FromCollection, WithTitle, WithStyles, WithHeadings, ShouldAutoSize
 {
     public function __construct()
     {
@@ -27,7 +27,7 @@ class DataHonorAsesmen implements FromCollection, WithTitle, WithStyles, WithHea
     */
     public function collection()
     {
-        return RefHonorAsesmen::select([
+        return RefHonorInternal::select([
                                             'id',
                                             'kode',
                                             'jenis',
@@ -46,6 +46,7 @@ class DataHonorAsesmen implements FromCollection, WithTitle, WithStyles, WithHea
             "Kode",
             "Jenis",
             "Satuan",
+            "Honor",
             "Keterangan",
         ];
     }
@@ -53,7 +54,7 @@ class DataHonorAsesmen implements FromCollection, WithTitle, WithStyles, WithHea
     // * Styling Cell
     public function styles(Worksheet $sheet)
     {
-        foreach (range("a", "e") as $value) {
+        foreach (range("a", "f") as $value) {
             $cell = strtoupper($value)."1";
             $sheet->getStyle($cell)->getFont()->setBold(true);
         }

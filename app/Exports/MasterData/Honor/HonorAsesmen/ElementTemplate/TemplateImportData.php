@@ -26,6 +26,7 @@ class TemplateImportData implements FromCollection, WithHeadings, ShouldAutoSize
             'Contoh ID Honor Asesmen',
             'Contoh Kode Honor Asesmen',
             'Contoh Jenis Honor Asesmen',
+            'Contoh Honor Honor Asesmen',
             'Contoh Satuan Honor Asesmen',
             'Contoh Keterangan Honor Asesmen',
         ];
@@ -47,7 +48,7 @@ class TemplateImportData implements FromCollection, WithHeadings, ShouldAutoSize
 
     public function styles(Worksheet $sheet)
     {
-        foreach (range("a", "e") as $value) {
+        foreach (range("a", "f") as $value) {
             $cell = strtoupper($value)."1";
             $sheet->getStyle($cell)->getFont()->setBold(true);
         }

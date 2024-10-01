@@ -45,6 +45,7 @@ class DataHonorAsesmen implements FromCollection, WithTitle, WithStyles, WithHea
             "ID",
             "Kode",
             "Jenis",
+            "Honor",
             "Satuan",
             "Keterangan",
         ];
@@ -53,7 +54,7 @@ class DataHonorAsesmen implements FromCollection, WithTitle, WithStyles, WithHea
     // * Styling Cell
     public function styles(Worksheet $sheet)
     {
-        foreach (range("a", "e") as $value) {
+        foreach (range("a", "f") as $value) {
             $cell = strtoupper($value)."1";
             $sheet->getStyle($cell)->getFont()->setBold(true);
         }

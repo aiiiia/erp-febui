@@ -4,7 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MasterData\BankController;
 use App\Http\Controllers\MasterData\Honor\HonorAsesmenController;
-use App\Http\Controllers\MasterData\Honor\HonorInternalontroller;
+use App\Http\Controllers\MasterData\Honor\HonorInternalController;
 use App\Http\Controllers\MasterData\Honor\HonorRisetController;
 use App\Http\Controllers\MasterData\Honor\HonorTrainingController;
 use App\Http\Controllers\MasterData\Industri\IndustriController;
@@ -72,7 +72,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/dataTableHonorInternal', [HonorInternalController::class, 'dataTableHonorInternal'])->name('masterDataHonorInternal.dataTableHonorInternal');
             Route::get('/masterDataHonorInternal/export', [HonorInternalController::class, 'export'])->name('masterDataHonorInternal.export');
             Route::get('/masterDataHonorInternalTemplateImport', [HonorInternalController::class, 'template_import'])->name('masterDataHonorInternal.templateImport');
-            Route::post('/importHonorInternal', [HonorInternalController::class, 'import_honor_asesmen'])->name('masterDataHonorInternal.importHonorInternal');
+            Route::post('/importHonorInternal', [HonorInternalController::class, 'import_honor_internal'])->name('masterDataHonorInternal.importHonorInternal');
             Route::resource('/masterDataHonorInternal', HonorInternalController::class)->names('masterDataHonorInternal');
 
             Route::get('/dataTableHonorRiset', [HonorRisetController::class, 'dataTableHonorRiset'])->name('masterDataHonorRiset.dataTableHonorRiset');
