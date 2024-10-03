@@ -25,7 +25,9 @@ class HonorRisetController extends Controller
                                 'id',
                                 'kode',
                                 'jenis',
-                                'honor'
+                                'honor',
+                                'satuan',
+                                'keterangan',
                             ]);
 
         return Datatables::of($data)
@@ -39,6 +41,7 @@ class HonorRisetController extends Controller
                             "kode" => $request->kode,
                             "jenis" => $request->jenis,
                             "honor" => $request->honor,
+                            "satuan" => $request->satuan,
                             "keterangan" => $request->keterangan,
                             "created_at" => date('Y-m-d H:i:s'),
                             "created_by" => auth()->user()->username
@@ -65,6 +68,8 @@ class HonorRisetController extends Controller
         $honor_riset->kode = $request->kode;
         $honor_riset->jenis = $request->jenis;
         $honor_riset->honor = $request->honor;
+        $honor_riset->satuan = $request->satuan;
+        $honor_riset->keterangan = $request->keterangan;
         $honor_riset->updated_at = date('Y-m-d H:i:s');
         $honor_riset->updated_by = auth()->user()->username;
 

@@ -78,13 +78,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/dataTableHonorRiset', [HonorRisetController::class, 'dataTableHonorRiset'])->name('masterDataHonorRiset.dataTableHonorRiset');
             Route::get('/masterDataHonorRiset/export', [HonorRisetController::class, 'export'])->name('masterDataHonorRiset.export');
             Route::get('/masterDataHonorRisetTemplateImport', [HonorRisetController::class, 'template_import'])->name('masterDataHonorRiset.templateImport');
-            Route::post('/importHonorRiset', [HonorRisetController::class, 'import_honor_asesmen'])->name('masterDataHonorRiset.importHonorRiset');
+            Route::post('/importHonorRiset', [HonorRisetController::class, 'import_honor_riset'])->name('masterDataHonorRiset.importHonorRiset');
             Route::resource('/masterDataHonorRiset', HonorRisetController::class)->names('masterDataHonorRiset');
 
             Route::get('/dataTableHonorTraining', [HonorTrainingController::class, 'dataTableHonorTraining'])->name('masterDataHonorTraining.dataTableHonorTraining');
             Route::get('/masterDataHonorTraining/export', [HonorTrainingController::class, 'export'])->name('masterDataHonorTraining.export');
             Route::get('/masterDataHonorTrainingTemplateImport', [HonorTrainingController::class, 'template_import'])->name('masterDataHonorTraining.templateImport');
-            Route::post('/importHonorTraining', [HonorTrainingController::class, 'import_honor_asesmen'])->name('masterDataHonorTraining.importHonorTraining');
+            Route::post('/importHonorTraining', [HonorTrainingController::class, 'import_honor_training'])->name('masterDataHonorTraining.importHonorTraining');
             Route::resource('/masterDataHonorTraining', HonorTrainingController::class)->names('masterDataHonorTraining');
         });
 
