@@ -34,6 +34,13 @@
                         <div class="card-toolbar">
                             <div class="d-flex justify-content-end" data-kt-pegawai-table-toolbar="base">
                                 <form id="kt_modal_export_pegawai_form" class="form" action="#"></form>
+                                <!--begin::Import-->
+                                <button type="button" class="btn btn-sm btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_import_pegawai">
+                                    <i class="ki-duotone ki-exit-down fs-2">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                    </i>Import
+                                </button>
                                 <!--begin::Export-->
                                 <button type="button" class="btn btn-sm btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_export_pegawai">
                                 <i class="ki-duotone ki-exit-up fs-2">
@@ -283,6 +290,40 @@
                 </div>
             </div>
         </div>
+        <!--begin::Modal - Pegawai  - Import-->
+        <div class="modal fade" id="kt_modal_import_pegawai" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered mw-650px">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="fw-bold">Import Pegawai</h2>
+                        <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-pegawai-modal-action="close">
+                            <i class="ki-duotone ki-cross fs-1">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                        </div>
+                    </div>
+                    <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                        <form id="kt_modal_import_pegawai_form" class="form" action="{{ route('masterDataPegawai.importPegawai') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="fv-row mb-10">
+                                <label class="required fs-6 fw-semibold form-label mb-2">File:</label>
+                                <input type="file" name="file" class="form-control" required>
+                            </div>
+                            <div class="text-center">
+                                <a href="{{ route('masterDataPegawai.templateImport') }}" class="btn btn-sm btn-success">Template</a>
+                                <button type="reset" class="btn btn-light me-3" data-kt-pegawai-modal-action="cancel">Discard</button>
+                                <button type="submit" class="btn btn-primary" data-kt-pegawai-modal-action="submit">
+                                    <span class="indicator-label">Submit</span>
+                                    <span class="indicator-progress">Please wait...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     @endpush
 
     @push('js')
@@ -292,6 +333,7 @@
         <script src="{{ asset('js/custom/master-data/pegawai/add.js') }}"></script>
         <script src="{{ asset('js/custom/master-data/pegawai/edit.js') }}"></script>
         <script src="{{ asset('js/custom/master-data/pegawai/export.js') }}"></script>
+        <script src="{{ asset('js/custom/master-data/pegawai/import.js') }}"></script>
 
         <script type="text/javascript">
             const routeDataTable             = "{{ route('masterDataPegawai.dataTablePegawai') }}",

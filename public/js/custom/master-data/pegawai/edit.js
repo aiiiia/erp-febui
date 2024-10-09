@@ -210,14 +210,15 @@ function viewPegawai(data) {
     var selectJenisKelamin='';
     var selectAgama='';
     var selectMarst='';
+    console.log(data);
 
     for(var i = 0; i < jsonPegawaiLevel.length; i++){
         var selected = '';
-        if(data.get_pegawai_level.code_pegawai_level == jsonPegawaiLevel[i].code_pegawai_level){
+        if(data.get_position.get_position_level.code_position_level == jsonPegawaiLevel[i].code_position_level){
             selected = 'selected';
         }
 
-        posLevel+= `<option value="${jsonPegawaiLevel[i].code_pegawai_level}" ${selected}>${jsonPegawaiLevel[i].nama_pegawai_level}</option>`;
+        posLevel+= `<option value="${jsonPegawaiLevel[i].code_position_level}" ${selected}>${jsonPegawaiLevel[i].nama_position_level}</option>`;
     }
 
     for(var i = 0; i < jsonPosition.length; i++){
@@ -237,9 +238,9 @@ function viewPegawai(data) {
         selectStatusKaryawan = "selected";
     }
 
-    if(data.status_karyawan == "Laki-Laki"){
+    if(data.jenis_kelamin == "Laki-Laki"){
         selectJenisKelamin = "selected";
-    }else if(data.status_karyawan == "Perempuan"){
+    }else if(data.jenis_kelamin == "Perempuan"){
         selectJenisKelamin = "selected";
     }
 
@@ -270,11 +271,11 @@ function viewPegawai(data) {
     tablePegawai = `<div class="fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Code Pegawai</label>
                         <input type="hidden" name="id_value" value="${data.id}">
-                        <input type="text" class="form-control form-control-solid" placeholder="" id="code_pegawai" name="code_pegawai" value="${data.code_pegawai}" readonly/>
+                        <input type="text" class="form-control form-control-solid" placeholder="" id="nip" name="nip" value="${data.nip}" readonly/>
                     </div>
                     <div class="fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Nama Pegawai</label>
-                        <input type="text" class="form-control" placeholder="" id="nama_pegawai" name="nama_pegawai" value="${data.nama_pegawai}" />
+                        <input type="text" class="form-control" placeholder="" id="nama" name="nama" value="${data.nama}" />
                     </div>
                     <div class="fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Job Title</label>
@@ -284,7 +285,7 @@ function viewPegawai(data) {
                         <label class="required fs-6 fw-semibold mb-2">Position Pegawai</label>
                         <select class="form-select" aria-label="Select example" id="code_position" name="code_position">
                             <option hidden>Silahkan Pilih Position Pegawai...</option>
-                            ${position}
+                            ${pos}
                         </select>
                     </div>
                     <div class="fv-row mb-7">
@@ -298,17 +299,17 @@ function viewPegawai(data) {
                         <label class="required fs-6 fw-semibold mb-2">Status Karyawan</label>
                         <select class="form-select" aria-label="Select example" id="status_karyawan" name="status_karyawan">
                             <option hidden>Silahkan Pilih Status Karyawan...</option>
-                            <option value="Tetap" ${selectStatusKaryawan}>Tetap</option>
-                            <option value="Kontrak" ${selectStatusKaryawan}>Kontrak</option>
-                            <option value="Asociate" ${selectStatusKaryawan}>Asociate</option>
+                            <option value="Tetap" ${data.status_karyawan == "Tetap" ? "selected" : ""}>Tetap</option>
+                            <option value="Kontrak" ${data.status_karyawan == "Kontrak" ? "selected" : ""}>Kontrak</option>
+                            <option value="Asociate" ${data.status_karyawan == "Asociate" ? "selected" : ""}>Asociate</option>
                         </select>
                     </div>
                     <div class="fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Jenis Kelamin</label>
                         <select class="form-select" aria-label="Select example" id="jenis_kelamin" name="jenis_kelamin">
                             <option hidden>Silahkan Pilih Jenis Kelamin...</option>
-                            <option value="Laki-Laki" ${selectJenisKelamin}>Laki-Laki</option>
-                            <option value="Perempuan" ${selectJenisKelamin}>Perempuan</option>
+                            <option value="Laki-Laki" ${data.jenis_kelamin == "Laki-Laki" ? "selected" : ""}>Laki-Laki</option>
+                            <option value="Perempuan" ${data.jenis_kelamin == "Perempuan" ? "selected" : ""}>Perempuan</option>
                         </select>
                     </div>
                     <div class="fv-row mb-7">
@@ -323,22 +324,22 @@ function viewPegawai(data) {
                         <label class="required fs-6 fw-semibold mb-2">Agama</label>
                         <select class="form-select" aria-label="Select example" id="agama" name="agama">
                             <option hidden>Silahkan Pilih Agama...</option>
-                            <option value="1-Islam" ${selectAgama}>Islam</option>
-                            <option value="2-Kristen" ${selectAgama}>Kristen</option>
-                            <option value="3-Katolik" ${selectAgama}>Katolik</option>
-                            <option value="4-Hindu" ${selectAgama}>Hindu</option>
-                            <option value="5-Budha" ${selectAgama}>Budha</option>
-                            <option value="6-Khonghucu" ${selectAgama}>Khonghucu</option>
+                            <option value="1-Islam" ${data.agama == "1-Islam" ? "selected" : ""}>Islam</option>
+                            <option value="2-Kristen" ${data.agama == "2-Kristen" ? "selected" : ""}>Kristen</option>
+                            <option value="3-Katolik" ${data.agama == "3-Katolik" ? "selected" : ""}>Katolik</option>
+                            <option value="4-Hindu" ${data.agama == "4-Hindu" ? "selected" : ""}>Hindu</option>
+                            <option value="5-Budha" ${data.agama == "5-Budha" ? "selected" : ""}>Budha</option>
+                            <option value="6-Khonghucu" ${data.agama == "6-Khonghucu" ? "selected" : ""}>Khonghucu</option>
                         </select>
                     </div>
                     <div class="fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Status Pernikahan</label>
                         <select class="form-select" aria-label="Select example" id="marst" name="marst">
                             <option hidden>Silahkan Pilih Status Pernikahan...</option>
-                            <option value="Menikah" ${selectMarst}>Menikah</option>
-                            <option value="Cerai Hidup" ${selectMarst}>Cerai Hidup</option>
-                            <option value="Cerai Mati" ${selectMarst}>Cerai Mati</option>
-                            <option value="Belum Menikah" ${selectMarst}>Belum Menikah</option>
+                            <option value="Menikah" ${data.marst == "Menikah" ? "selected" : ""}>Menikah</option>
+                            <option value="Cerai Hidup" ${data.marst == "Cerai Hidup" ? "selected" : ""}>Cerai Hidup</option>
+                            <option value="Cerai Mati" ${data.marst == "Cerai Mati" ? "selected" : ""}>Cerai Mati</option>
+                            <option value="Belum Menikah" ${data.marst == "Belum Menikah" ? "selected" : ""}>Belum Menikah</option>
                         </select>
                     </div>
                     <div class="fv-row mb-7">

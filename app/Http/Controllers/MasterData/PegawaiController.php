@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\MasterData;
 
+use App\Exports\Pegawai\TemplateImportPegawai;
+use App\Imports\Pegawai\ProcessImportPegawai;
 use App\Exports\Pegawai\DownloadDataPegawai;
 use App\Http\Controllers\Controller;
 use App\Models\RefPegawai;
@@ -57,7 +59,7 @@ class PegawaiController extends Controller
                                 "job_title" => $request->job_title,
                                 "code_position" => $request->code_position,
                                 "bod_type" => $pos_level->nama_position_level,
-                                "status_karyawan" => $pos_level->status_karyawan,
+                                "status_karyawan" => $request->status_karyawan,
                                 "jenis_kelamin" => $request->jenis_kelamin,
                                 "tempat_lahir" => $request->tempat_lahir,
                                 "tgl_lahir" => $request->tgl_lahir,
@@ -83,13 +85,13 @@ class PegawaiController extends Controller
 
     public function update(Request $request, $id)
     {
-        $pegawai = RefPegawai::find($request->id);
+        $pegawai = RefPegawai::find($request->id_value);
 
         if (!$pegawai) {
             $message = "failed";
             $code    = 400;
         }
-        $pos_level = RefPositionLevel::select('nama__position_level')
+        $pos_level = RefPositionLevel::select('nama_position_level')
                                         ->where('code_position_level', $request->bod_type)
                                         ->first();
 
@@ -97,7 +99,7 @@ class PegawaiController extends Controller
         $pegawai->nama = $request->nama;
         $pegawai->job_title = $request->job_title;
         $pegawai->code_position = $request->code_position;
-        $pegawai->bod_type = $pos_level->nama__position_level;
+        $pegawai->bod_type = $pos_level->nama_position_level;
         $pegawai->status_karyawan = $request->status_karyawan;
         $pegawai->jenis_kelamin = $request->jenis_kelamin;
         $pegawai->tempat_lahir = $request->tempat_lahir;
@@ -114,7 +116,7 @@ class PegawaiController extends Controller
 
         $pegawai->save();
 
-        return redirect()->route('masterDataPosition.index')->with([
+        return redirect()->route('masterDataPegawai.index')->with([
             "status"  => 'success',
             "title"   => 'Success!',
             "message" => "Perubahan Data Pegawai Berhasil Dilakukan",
@@ -150,7 +152,9 @@ class PegawaiController extends Controller
         $code     = 200;
         $pegawai = false;
 
-        $pegawai = RefPegawai::with(['getPosition'])
+        $pegawai = RefPegawai::with(['getPosition' => function($query) {
+            $query->with('getPositionLevel');
+        }])
                                 ->find($id);
 
         if (!$pegawai) {
@@ -168,5 +172,44 @@ class PegawaiController extends Controller
 
     public function export() {
         return Excel::download(new DownloadDataPegawai(), 'Data Pegawai.xlsx');
+    }
+
+    public function template_import()
+    {
+
+        return Excel::download(new TemplateImportPegawai, 'Template Import Pegawai.xlsx');
+    }
+
+    public function import_pegawai(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx',
+        ]);
+
+        try {
+            $import = Excel::import(new ProcessImportPegawai, $request->file);
+
+            return redirect()->back()->with([
+                "status"  => 'success',
+                "title"   => 'Success!',
+                "message" => "File has been import",
+            ]);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            dd($failures);
+
+            foreach ($failures as $failure) {
+                $failure->row(); // row that went wrong
+                $failure->attribute(); // either heading key (if using heading row concern) or column index
+                $failure->errors(); // Actual error messages from Laravel validator
+                $failure->values(); // The values of the row that has failed.
+            }
+
+            return redirect()->back()->with([
+                "status"  => 'success',
+                "title"   => 'Success!',
+                "message" => "Error: ".$failure->values()." has ".$failure->values(),
+            ]);
+       }
     }
 }
