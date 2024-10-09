@@ -34,6 +34,13 @@
                         <div class="card-toolbar">
                             <div class="d-flex justify-content-end" data-kt-unit-table-toolbar="base">
                                 <form id="kt_modal_export_unit_form" class="form" action="#"></form>
+                                <!--begin::Import-->
+                                <button type="button" class="btn btn-sm btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_import_unit">
+                                    <i class="ki-duotone ki-exit-down fs-2">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                    </i>Import
+                                </button>
                                 <!--begin::Export-->
                                 <button type="button" class="btn btn-sm btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_export_unit">
                                     <i class="ki-duotone ki-exit-up fs-2">
@@ -175,6 +182,40 @@
                                 </select>
                             </div>
                             <div class="text-center">
+                                <button type="reset" class="btn btn-light me-3" data-kt-unit-modal-action="cancel">Discard</button>
+                                <button type="submit" class="btn btn-primary" data-kt-unit-modal-action="submit">
+                                    <span class="indicator-label">Submit</span>
+                                    <span class="indicator-progress">Please wait...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--begin::Modal - Unit  - Import-->
+        <div class="modal fade" id="kt_modal_import_unit" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered mw-650px">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="fw-bold">Import Unit</h2>
+                        <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-unit-modal-action="close">
+                            <i class="ki-duotone ki-cross fs-1">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                        </div>
+                    </div>
+                    <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                        <form id="kt_modal_import_unit_form" class="form" action="{{ route('masterDataUnit.importUnit') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="fv-row mb-10">
+                                <label class="required fs-6 fw-semibold form-label mb-2">File:</label>
+                                <input type="file" name="file" class="form-control" required>
+                            </div>
+                            <div class="text-center">
+                                <a href="{{ route('masterDataUnit.templateImport') }}" class="btn btn-sm btn-success">Template</a>
                                 <button type="reset" class="btn btn-light me-3" data-kt-unit-modal-action="cancel">Discard</button>
                                 <button type="submit" class="btn btn-primary" data-kt-unit-modal-action="submit">
                                     <span class="indicator-label">Submit</span>

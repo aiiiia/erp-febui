@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\MasterData;
 
+use App\Imports\Unit\ProcessImportUnit;
+use App\Exports\Unit\TemplateImportUnit;
 use App\Exports\Unit\DownloadDataUnit;
 use App\Http\Controllers\Controller;
 use App\Models\RefUnit;
@@ -117,5 +119,43 @@ class UnitController extends Controller
 
     public function export() {
         return Excel::download(new DownloadDataUnit(), 'Data Unit.xlsx');
+    }
+
+    public function template_import()
+    {
+
+        return Excel::download(new TemplateImportUnit, 'Template Import Unit.xlsx');
+    }
+
+    public function import_unit(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx',
+        ]);
+
+        try {
+            $import = Excel::import(new ProcessImportUnit, $request->file);
+
+            return redirect()->back()->with([
+                "status"  => 'success',
+                "title"   => 'Success!',
+                "message" => "File has been import",
+            ]);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+
+            foreach ($failures as $failure) {
+                $failure->row(); // row that went wrong
+                $failure->attribute(); // either heading key (if using heading row concern) or column index
+                $failure->errors(); // Actual error messages from Laravel validator
+                $failure->values(); // The values of the row that has failed.
+            }
+
+            return redirect()->back()->with([
+                "status"  => 'success',
+                "title"   => 'Success!',
+                "message" => "Error: ".$failure->values()." has ".$failure->values(),
+            ]);
+       }
     }
 }

@@ -31,11 +31,12 @@ class DataPosition implements FromCollection, WithTitle, WithStyles, WithHeading
         $Position = $this->Position;
 
         return RefPosition::select([
-                                    'ref_position.code_position',
-                                    'ref_position.nama_position',
                                     'ref_position_level.nama_position_level',
                                     'ref_position_type.nama_position_type',
                                     'ref_unit.nama_unit',
+                                    'ref_position.code_position',
+                                    'ref_position.nama_position',
+                                    'ref_position.org_level',
                                     'ref_position.line_manager',
                                 ])
                                 ->join('ref_position_level', 'ref_position_level.code_position_level', 'ref_position.code_position_level')
@@ -48,11 +49,12 @@ class DataPosition implements FromCollection, WithTitle, WithStyles, WithHeading
     public function headings(): array
     {
         return [
+            "Code Position Level",
+            "Code Position Type",
+            "Code Unit",
             "Code Position",
             "Nama Position",
-            "Position Level",
-            "Position Type",
-            "Unit",
+            "Org Level",
             "Line Manager",
         ];
     }
@@ -60,7 +62,7 @@ class DataPosition implements FromCollection, WithTitle, WithStyles, WithHeading
     // * Styling Cell
     public function styles(Worksheet $sheet)
     {
-        foreach (range("a", "f") as $value) {
+        foreach (range("a", "g") as $value) {
             $cell = strtoupper($value)."1";
             $sheet->getStyle($cell)->getFont()->setBold(true);
         }

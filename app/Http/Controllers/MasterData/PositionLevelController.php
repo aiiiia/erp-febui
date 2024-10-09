@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\MasterData;
 
+use App\Imports\PositionLevel\ProcessImportPositionLevel;
+use App\Exports\PositionLevel\TemplateImportPositionLevel;
 use App\Exports\PositionLevel\DownloadDataPositionLevel;
 use App\Http\Controllers\Controller;
 use App\Models\RefPositionLevel;
@@ -116,5 +118,43 @@ class PositionLevelController extends Controller
 
     public function export() {
         return Excel::download(new DownloadDataPositionLevel(), 'Data Position Level.xlsx');
+    }
+
+    public function template_import()
+    {
+
+        return Excel::download(new TemplateImportPositionLevel, 'Template Import Position Level.xlsx');
+    }
+
+    public function import_position_level(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx',
+        ]);
+
+        try {
+            $import = Excel::import(new ProcessImportPositionLevel, $request->file);
+
+            return redirect()->back()->with([
+                "status"  => 'success',
+                "title"   => 'Success!',
+                "message" => "File has been import",
+            ]);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+
+            foreach ($failures as $failure) {
+                $failure->row(); // row that went wrong
+                $failure->attribute(); // either heading key (if using heading row concern) or column index
+                $failure->errors(); // Actual error messages from Laravel validator
+                $failure->values(); // The values of the row that has failed.
+            }
+
+            return redirect()->back()->with([
+                "status"  => 'success',
+                "title"   => 'Success!',
+                "message" => "Error: ".$failure->values()." has ".$failure->values(),
+            ]);
+       }
     }
 }

@@ -31,16 +31,24 @@ class DataPegawai implements FromCollection, WithTitle, WithStyles, WithHeadings
         $Pegawai = $this->Pegawai;
 
         return RefPegawai::select([
-                                    'ref_position.code_position',
+                                    'ref_pegawai.nip',
+                                    'ref_pegawai.nama',
                                     'ref_position.nama_position',
                                     'ref_position_level.nama_position_level',
-                                    'ref_position_type.nama_position_type',
-                                    'ref_unit.nama_unit',
-                                    'ref_position.line_manager',
+                                    'ref_pegawai.status_karyawan',
+                                    'ref_pegawai.jenis_kelamin',
+                                    'ref_pegawai.tempat_lahir',
+                                    'ref_pegawai.tgl_lahir',
+                                    'ref_pegawai.agama',
+                                    'ref_pegawai.marst',
+                                    'ref_pegawai.alamat',
+                                    'ref_pegawai.no_ktp',
+                                    'ref_pegawai.no_npwp',
+                                    'ref_pegawai.email',
+                                    'ref_pegawai.no_hp',
                                 ])
                                 ->join('ref_position_level', 'ref_position_level.code_position_level', 'ref_position.code_position_level')
                                 ->join('ref_position_type', 'ref_position_type.code_position_type', 'ref_position.code_position_type')
-                                ->join('ref_unit', 'ref_unit.code_unit', 'ref_position.code_unit')
                                 ->get();
     }
 
@@ -48,19 +56,28 @@ class DataPegawai implements FromCollection, WithTitle, WithStyles, WithHeadings
     public function headings(): array
     {
         return [
-            "Code Pegawai",
+            "NIP Pegawai",
             "Nama Pegawai",
-            "Pegawai Level",
-            "Pegawai Type",
-            "Unit",
-            "Line Manager",
+            "Position Pegawai",
+            "Position Level",
+            "Status Karyawan",
+            "Jenis Kelamin",
+            "Tempat Lahir",
+            "Tgl Lahir",
+            "Agama",
+            "Status Pernikahan",
+            "Alamat",
+            "No KTP",
+            "No NPWP",
+            "email",
+            "No HP",
         ];
     }
 
     // * Styling Cell
     public function styles(Worksheet $sheet)
     {
-        foreach (range("a", "f") as $value) {
+        foreach (range("a", "o") as $value) {
             $cell = strtoupper($value)."1";
             $sheet->getStyle($cell)->getFont()->setBold(true);
         }

@@ -136,22 +136,32 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/dataTableUnit', [UnitController::class, 'dataTableUnit'])->name('masterDataUnit.dataTableUnit');
         Route::get('/masterDataUnit/export', [UnitController::class, 'export'])->name('masterDataUnit.export');
+        Route::get('/masterDataUnitTemplateImport', [UnitController::class, 'template_import'])->name('masterDataUnit.templateImport');
+        Route::post('/importUnit', [UnitController::class, 'import_unit'])->name('masterDataUnit.importUnit');
         Route::resource('/masterDataUnit', UnitController::class)->names('masterDataUnit');
 
         Route::get('/masterDataPositionLevel/export', [PositionLevelController::class, 'export'])->name('masterDataPositionLevel.export');
         Route::resource('/masterDataPositionLevel', PositionLevelController::class)->names('masterDataPositionLevel');
+        Route::get('/masterDataPositionLevelTemplateImport', [PositionLevelController::class, 'template_import'])->name('masterDataPositionLevel.templateImport');
+        Route::post('/importPositionLevel', [PositionLevelController::class, 'import_position_level'])->name('masterDataPositionLevel.importPositionLevel');
         Route::get('/dataTablePositionLevel', [PositionLevelController::class, 'dataTablePositionLevel'])->name('masterDataPositionLevel.dataTablePositionLevel');
 
         Route::get('/dataTablePositionType', [PositionTypeController::class, 'dataTablePositionType'])->name('masterDataPositionType.dataTablePositionType');
         Route::get('/masterDataPositionType/export', [PositionTypeController::class, 'export'])->name('masterDataPositionType.export');
+        Route::get('/masterDataPositionTypeTemplateImport', [PositionTypeController::class, 'template_import'])->name('masterDataPositionType.templateImport');
+        Route::post('/importPositionType', [PositionTypeController::class, 'import_position_type'])->name('masterDataPositionType.importPositionType');
         Route::resource('/masterDataPositionType', PositionTypeController::class)->names('masterDataPositionType');
 
         Route::get('/dataTablePosition', [PositionController::class, 'dataTablePosition'])->name('masterDataPosition.dataTablePosition');
         Route::get('/masterDataPosition/export', [PositionController::class, 'export'])->name('masterDataPosition.export');
+        Route::get('/masterDataPositionTemplateImport', [PositionController::class, 'template_import'])->name('masterDataPosition.templateImport');
+        Route::post('/importPosition', [PositionController::class, 'import_position'])->name('masterDataPosition.importPosition');
         Route::resource('/masterDataPosition', PositionController::class)->names('masterDataPosition');
 
         Route::get('/dataTablePegawai', [PegawaiController::class, 'dataTablePegawai'])->name('masterDataPegawai.dataTablePegawai');
         Route::get('/masterDataPegawai/export', [PegawaiController::class, 'export'])->name('masterDataPegawai.export');
+        Route::get('/masterDataPegawaiTemplateImport', [PegawaiController::class, 'template_import'])->name('masterDataPegawai.templateImport');
+        Route::post('/importPegawai', [PegawaiController::class, 'import_pegawai'])->name('masterDataPegawai.importPegawai');
         Route::resource('/masterDataPegawai', PegawaiController::class)->names('masterDataPegawai');
 
         Route::get('/dataTableKategoriProyek', [KategoriProyekController::class, 'dataTableKategoriProyek'])->name('masterDataKategoriProyek.dataTableKategoriProyek');
